@@ -1,8 +1,10 @@
+import TodoList from "./components/TodoList";
+
 function App() {
   return (
     <>
-      <div>
-        <h2>App</h2>
+      <div className="min-h-screen bg-gray-500 flex items-center justify-center">
+        <TodoList />
       </div>
     </>
   );
