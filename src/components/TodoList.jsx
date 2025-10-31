@@ -1,16 +1,16 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import CustomForm from "./CustomForm";
 
 const TodoList = () => {
   const [todos, setTodos] = useState([]);
 
-  const addTask = (task) => {
+  const addTask = useCallback((task) => {
     setTodos((prev) => [...prev, task]);
-  };
+  }, []);
 
-  const removeTask = (index) => {
+  const removeTask = useCallback((index) => {
     setTodos((prev) => prev.filter((_, i) => i !== index));
-  };
+  }, []);
 
   console.log("TODOS_TEST:", todos);
 
