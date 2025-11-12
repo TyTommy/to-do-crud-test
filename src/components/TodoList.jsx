@@ -1,18 +1,31 @@
 import { useCallback, useState } from "react";
 import CustomForm from "./CustomForm";
+import TodoItem from "./TodoItem";
 
 const TodoList = () => {
   const [todos, setTodos] = useState([]);
 
   const addTask = useCallback((task) => {
-    setTodos((prev) => [...prev, task]);
+    setTodos((prevTodos) => [...prevTodos, task]);
   }, []);
 
-  const removeTask = useCallback((index) => {
-    setTodos((prev) => prev.filter((_, i) => i !== index));
+  const deleteTask = useCallback((id) => {
+    setTodos((prev) => prev.filter((todo) => todo.id !== id));
   }, []);
 
-  console.log("TODOS_TEST:", todos);
+  const toggleTask = useCallback((id) => {
+    setTodos((prev) =>
+      prev.map((todo) =>
+        todo.id === id ? { ...todo, completed: !todo.completed } : todo
+      )
+    );
+  }, []);
+
+  const editTask = useCallback((id, newTask) => {
+    setTodos((prev) =>
+      prev.map((todo) => (todo.id === id ? { ...todo, text: newText } : todo))
+    );
+  }, []);
 
   return (
     <div className="max-w-md mx-auto space-y-6">
@@ -24,19 +37,14 @@ const TodoList = () => {
         {todos.length === 0 ? (
           <li className="text-center text-gray-500 py-4">No task yet</li>
         ) : (
-          todos.map((todo, index) => (
-            <li
-              key={index}
-              className="flex items-center justify-between px-4 py-3 font-medium"
-            >
-              <span className="text-xl">{todo}</span>
-              <button
-                onClick={() => removeTask(index)}
-                className="cursor-pointer text-[8px] px-1.5 py-1.5 rounded-2xl bg-gray-200 hover:bg-gray-300 transition-colors"
-              >
-                ❌
-              </button>
-            </li>
+          todos.map((todo) => (
+            <TodoItem
+              key={todo.id}
+              todo={todo}
+              onDelete={deleteTask}
+              onToggle={toggleTask}
+              onEdit={editTask}
+            />
           ))
         )}
       </ul>
