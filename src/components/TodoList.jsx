@@ -5,8 +5,13 @@ import TodoItem from "./TodoItem";
 const TodoList = () => {
   const [todos, setTodos] = useState([]);
 
-  const addTask = useCallback((task) => {
-    setTodos((prevTodos) => [...prevTodos, task]);
+  const addTask = useCallback((text) => {
+    const newTask = {
+      id: Date.now(),
+      text,
+      completed: false,
+    };
+    setTodos((prevTodos) => [...prevTodos, newTask]);
   }, []);
 
   const deleteTask = useCallback((id) => {
@@ -21,7 +26,7 @@ const TodoList = () => {
     );
   }, []);
 
-  const editTask = useCallback((id, newTask) => {
+  const editTask = useCallback((id, newText) => {
     setTodos((prev) =>
       prev.map((todo) => (todo.id === id ? { ...todo, text: newText } : todo))
     );

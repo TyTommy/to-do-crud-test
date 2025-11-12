@@ -8,6 +8,7 @@ const TodoItem = ({ todo, onDelete, onToggle, onEdit }) => {
     if (isEditing && editValue.trim() !== "") {
       onEdit(todo.id, editValue);
     }
+    setIsEditing(!isEditing);
   });
 
   return (
@@ -16,7 +17,7 @@ const TodoItem = ({ todo, onDelete, onToggle, onEdit }) => {
         todo.completed ? "bg-green-50" : "bg-white"
       }`}
     >
-      <div>
+      <div className="flex items-center gap-2">
         <input
           type="checkbox"
           checked={todo.completed}
@@ -48,7 +49,10 @@ const TodoItem = ({ todo, onDelete, onToggle, onEdit }) => {
         >
           {isEditing ? "💾" : "✏️"}
         </button>
-        <button className="text-(--color-danger) hover:text-(--color-danger-hover)">
+        <button
+          onClick={() => onDelete(todo.id)}
+          className="text-(--color-danger) hover:text-(--color-danger-hover)"
+        >
           ✕
         </button>
       </div>
