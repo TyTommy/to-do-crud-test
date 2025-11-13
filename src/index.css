@@ -10,5 +10,6 @@
 }
 
 body {
-  @apply bg-[var(--color-primary)] text-gray-800 font-sans;
+  background-color: var(--color-primary);
+  @apply text-gray-800 font-sans;
 }
