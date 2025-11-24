@@ -8,8 +8,3 @@
   --color-danger-hover: #b91c1c;
   --color-success: #22c55e;
 }
-
-body {
-  background-color: var(--color-primary);
-  @apply text-gray-800 font-sans;
-}

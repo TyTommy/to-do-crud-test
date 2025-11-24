@@ -1,9 +1,30 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import CustomForm from "./CustomForm";
 import TodoItem from "./TodoItem";
 
 const TodoList = () => {
   const [todos, setTodos] = useState([]);
+
+  useEffect(() => {
+    const stored = localStorage.getItem("todos");
+
+    if (stored) {
+      try {
+        const parsed = JSON.parse(stored);
+
+        if (Array.isArray(parsed)) {
+          setTodos(parsed);
+        }
+      } catch (error) {
+        console.error("Failed to load todos:", error);
+        localStorage.removeItem("todos");
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("todos", JSON.stringify(todos));
+  }, [todos]);
 
   const addTask = useCallback((text) => {
     const newTask = {
