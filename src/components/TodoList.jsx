@@ -16,7 +16,7 @@ const TodoList = () => {
           setTodos(parsed);
         }
       } catch (error) {
-        console.error("Failed to load todos:", error);
+        console.error("Failed to loan todos: ", error);
         localStorage.removeItem("todos");
       }
     }
@@ -55,7 +55,9 @@ const TodoList = () => {
 
   return (
     <div className="max-w-md mx-auto space-y-6">
-      <h2 className="text-2xl font-bold text-center">🧑🏻‍💻 To-Do List</h2>
+      <h2 className="text-2xl font-bold text-center text-gray-200">
+        🧑🏻‍💻 To-Do List
+      </h2>
 
       <CustomForm onAdd={addTask} />
 
@@ -79,3 +81,24 @@ const TodoList = () => {
 };
 
 export default TodoList;
+
+// useEffect(() => {
+//   const stored = localStorage.getItem("todos");
+
+//   if (stored) {
+//     try {
+//       const parsed = JSON.parse(stored);
+
+//       if (Array.isArray(parsed)) {
+//         setTodos(parsed);
+//       }
+//     } catch (error) {
+//       console.error("Failed to loan todos:", error);
+//       localStorage.removeItem("todos");
+//     }
+//   }
+// }, []);
+
+// useEffect(() => {
+//   localStorage.setItem("todos", JSON.stringify(todos));
+// }, [todos]);

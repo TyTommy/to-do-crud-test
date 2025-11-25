@@ -9,11 +9,11 @@ const TodoItem = ({ todo, onDelete, onToggle, onEdit }) => {
       onEdit(todo.id, editValue);
     }
     setIsEditing(!isEditing);
-  });
+  }, [isEditing, editValue, onEdit, todo]);
 
   return (
     <li
-      className={`flex justify-between items-center px-4 py-3 transitions-colors ${
+      className={`flex justify-between items-center px-4 py-3 transitions-colors rounded-xs ${
         todo.completed ? "bg-green-50" : "bg-white"
       }`}
     >

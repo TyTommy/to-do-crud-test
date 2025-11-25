@@ -13,14 +13,14 @@ const CustomForm = ({ onAdd }) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex items-center gap-3 bg-white p-4 rounded-2xl shadow-md"
+      className="flex items-center gap-3 bg-white p-4 rounded-md shadow-md"
     >
       <input
         type="text"
         value={task}
         onChange={(e) => setTask(e.target.value)}
         placeholder="Add new task..."
-        className="flex-1 border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-1 focus:ring-blue-500"
+        className="flex-1 border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-1 focus:ring-blue-500"
       />
       <button
         type="submit"
