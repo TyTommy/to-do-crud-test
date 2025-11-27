@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import CustomForm from "./CustomForm";
 import TodoItem from "./TodoItem";
 
@@ -54,6 +54,18 @@ const TodoList = () => {
     );
   }, []);
 
+  const filteredTodos = useMemo(() => {
+    if (filter === "active") {
+      return todos.filter((t) => !t.completed);
+    }
+
+    if (filter === "completed") {
+      return todos.filter((t) => t.completed);
+    }
+
+    return todos;
+  }, [todos, filter]);
+
   return (
     <div className="max-w-md mx-auto space-y-6">
       <h2 className="text-2xl font-bold text-center text-gray-200">
@@ -62,7 +74,7 @@ const TodoList = () => {
 
       <CustomForm onAdd={addTask} />
 
-      <div className="flex justify-between text-sm font-medium">
+      <div className="flex justify-center gap-3 text-sm font-medium">
         <button
           onClick={() => setFilter("all")}
           className={`px-3 py-1 rounded-lg ${
@@ -96,10 +108,10 @@ const TodoList = () => {
       </div>
 
       <ul className="bg-white rounded-2xl shadow-md divide-y divide-gray-200">
-        {todos.length === 0 ? (
+        {filteredTodos.length === 0 ? (
           <li className="text-center text-gray-500 py-4">No task yet</li>
         ) : (
-          todos.map((todo) => (
+          filteredTodos.map((todo) => (
             <TodoItem
               key={todo.id}
               todo={todo}
