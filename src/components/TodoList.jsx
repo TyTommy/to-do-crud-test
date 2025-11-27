@@ -4,6 +4,7 @@ import TodoItem from "./TodoItem";
 
 const TodoList = () => {
   const [todos, setTodos] = useState([]);
+  const [filter, setFilter] = useState("all");
 
   useEffect(() => {
     const stored = localStorage.getItem("todos");
@@ -16,7 +17,7 @@ const TodoList = () => {
           setTodos(parsed);
         }
       } catch (error) {
-        console.error("Failed to loan todos: ", error);
+        console.error("Failed to loan todos:", error);
         localStorage.removeItem("todos");
       }
     }
@@ -61,6 +62,39 @@ const TodoList = () => {
 
       <CustomForm onAdd={addTask} />
 
+      <div className="flex justify-between text-sm font-medium">
+        <button
+          onClick={() => setFilter("all")}
+          className={`px-3 py-1 rounded-lg ${
+            filter === "all"
+              ? "bg-blue-500 text-white"
+              : "bg-gray-300 text-gray-800"
+          }`}
+        >
+          All
+        </button>
+        <button
+          onClick={() => setFilter("active")}
+          className={`px-3 py-1 rounded-lg ${
+            filter === "active"
+              ? "bg-blue-500 text-white"
+              : "bg-gray-300 text-gray-800"
+          }`}
+        >
+          Active
+        </button>
+        <button
+          onClick={() => setFilter("completed")}
+          className={`px-3 py-1 rounded-lg ${
+            filter === "completed"
+              ? "bg-blue-500 text-white"
+              : "bg-gray-300 text-gray-800"
+          }`}
+        >
+          Completed
+        </button>
+      </div>
+
       <ul className="bg-white rounded-2xl shadow-md divide-y divide-gray-200">
         {todos.length === 0 ? (
           <li className="text-center text-gray-500 py-4">No task yet</li>
@@ -81,24 +115,3 @@ const TodoList = () => {
 };
 
 export default TodoList;
-
-// useEffect(() => {
-//   const stored = localStorage.getItem("todos");
-
-//   if (stored) {
-//     try {
-//       const parsed = JSON.parse(stored);
-
-//       if (Array.isArray(parsed)) {
-//         setTodos(parsed);
-//       }
-//     } catch (error) {
-//       console.error("Failed to loan todos:", error);
-//       localStorage.removeItem("todos");
-//     }
-//   }
-// }, []);
-
-// useEffect(() => {
-//   localStorage.setItem("todos", JSON.stringify(todos));
-// }, [todos]);

@@ -42,6 +42,7 @@ const TodoItem = ({ todo, onDelete, onToggle, onEdit }) => {
           </span>
         )}
       </div>
+
       <div className="flex items-center gap-2">
         <button
           onClick={handleEdit}
