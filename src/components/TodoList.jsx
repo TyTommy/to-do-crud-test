@@ -5,6 +5,7 @@ import TodoItem from "./TodoItem";
 const TodoList = () => {
   const [todos, setTodos] = useState([]);
   const [filter, setFilter] = useState("all");
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     const stored = localStorage.getItem("todos");
@@ -55,16 +56,22 @@ const TodoList = () => {
   }, []);
 
   const filteredTodos = useMemo(() => {
+    let result = [...todos];
+
     if (filter === "active") {
-      return todos.filter((t) => !t.completed);
+      result = result.filter((t) => !t.completed);
+    } else if (filter === "completed") {
+      result = result.filter((t) => t.completed);
     }
 
-    if (filter === "completed") {
-      return todos.filter((t) => t.completed);
+    if (search.trim() !== "") {
+      result = result.filter((t) =>
+        t.text.toLowerCase().includes(search.toLowerCase())
+      );
     }
 
-    return todos;
-  }, [todos, filter]);
+    return result;
+  }, [filter, todos, search]);
 
   return (
     <div className="max-w-md mx-auto space-y-6">
@@ -74,7 +81,17 @@ const TodoList = () => {
 
       <CustomForm onAdd={addTask} />
 
-      <div className="flex justify-center gap-3 text-sm font-medium">
+      <div>
+        <input
+          type="text"
+          placeholder="Search tasks..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-400 outlet-none text-gray-100"
+        />
+      </div>
+
+      <div className="flex justify-center gap-3 text-sm font-medium mb-2">
         <button
           onClick={() => setFilter("all")}
           className={`px-3 py-1 rounded-lg ${
