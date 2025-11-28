@@ -11,6 +11,11 @@ const TodoItem = ({ todo, onDelete, onToggle, onEdit }) => {
     setIsEditing(!isEditing);
   }, [isEditing, editValue, onEdit, todo]);
 
+  const handleDelete = () => {
+    if (window.confirm("Are you sure you want to delete this task ?"))
+      onDelete(todo.id);
+  };
+
   return (
     <li
       className={`flex justify-between items-center px-4 py-3 transitions-colors rounded-xs ${
@@ -30,7 +35,7 @@ const TodoItem = ({ todo, onDelete, onToggle, onEdit }) => {
             type="text"
             value={editValue}
             onChange={(e) => setEditValue(e.target.value)}
-            className="border rounded px-2 py-1"
+            className="border rounded px-2 py-1 mr-2"
           />
         ) : (
           <span
@@ -46,15 +51,15 @@ const TodoItem = ({ todo, onDelete, onToggle, onEdit }) => {
       <div className="flex items-center gap-2">
         <button
           onClick={handleEdit}
-          className="text-blue-600 hover:text-(--color-primary-hover)"
+          className="px-1 py-1 font-medium rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition"
         >
-          {isEditing ? "💾" : "✏️"}
+          {isEditing ? "Save" : "Edit"}
         </button>
         <button
-          onClick={() => onDelete(todo.id)}
-          className="text-(--color-danger) hover:text-(--color-danger-hover)"
+          onClick={handleDelete}
+          className="px-1 py-1 font-medium rounded-lg bg-red-500 text-white hover:bg-red-600 transition"
         >
-          ✕
+          Delete
         </button>
       </div>
     </li>

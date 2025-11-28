@@ -66,12 +66,12 @@ const TodoList = () => {
 
     if (search.trim() !== "") {
       result = result.filter((t) =>
-        t.text.toLowerCase().includes(search.toLowerCase())
+        t.text.toLowerCase().includes(search.toLocaleLowerCase())
       );
     }
 
     return result;
-  }, [filter, todos, search]);
+  }, [todos, filter, search]);
 
   return (
     <div className="max-w-md mx-auto space-y-6">
